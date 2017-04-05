@@ -6,8 +6,9 @@ public class Nodo {
 	ArrayList<Integer> estado;
 	Nodo pai;
 	String passo;
-	int custo_heuristica_bordas;
-	int custo_total_caminho = 0;
+	int custoHeuristicaBordas;
+	int custoTotalCaminho = 0;
+	int tamanhoCaminho = 0;
 
 	private static final ArrayList<Integer> BORDAS_POSICAO_0 = new ArrayList<>(Arrays.asList(-1, 9, 9, -1));
 	private static final ArrayList<Integer> BORDAS_POSICAO_1 = new ArrayList<>(Arrays.asList(-1, 9, 9, 9));
@@ -21,15 +22,16 @@ public class Nodo {
 
 	public Nodo(ArrayList<Integer> estado) {
 		this.estado = estado;
-		custo_heuristica_bordas = calculeCusto(estado);
+		custoHeuristicaBordas = calculeCusto(estado);
 	}
 
 	public Nodo(ArrayList<Integer> estado, Nodo pai, String passo) {
 		this.estado = estado;
-		custo_heuristica_bordas = calculeCusto(estado);
-		custo_total_caminho = pai.custo_total_caminho + custo_heuristica_bordas;
+		custoHeuristicaBordas = calculeCusto(estado);
+		custoTotalCaminho = pai.custoTotalCaminho + custoHeuristicaBordas;
 		this.pai = pai;
 		this.passo = passo;
+		tamanhoCaminho = pai.tamanhoCaminho+1;
 	}
 
 	public void setPai(Nodo pai) {

@@ -6,6 +6,7 @@ public class Solver {
 	ArrayList<Nodo> nodosVisitados;
 	Nodo nodoAtual;
 	ArrayList<Integer> estadoSolucao;
+	boolean erro = false;
 
 	public Solver(ArrayList<Integer> estadoInicial) {
 		nodoAtual = new Nodo(estadoInicial);
@@ -26,34 +27,61 @@ public class Solver {
 	public ArrayList<String> solvePuzzle() {
 		while (!isNodoSolucao()) {
 			Nodo visitado = isNodoVisitado(nodoAtual);
-			if (visitado != null && nodoAtual.custo_total_caminho > visitado.custo_total_caminho) {
-				nodosVisitados.remove(visitado);
+			if (visitado != null && nodoAtual.custoTotalCaminho > visitado.custoTotalCaminho) {
 				nodosVisitados.add(nodoAtual);
+				atualizaFilhos(nodoAtual);
 			} else {
 				ArrayList<Nodo> filhos = buscaFilhos(nodoAtual);
-				for (Nodo filho : filhos) {
-					if (!isFilhoNaFronteira(filho)) {
-						fronteira.add(filho);
-					}
+				if (!haveFilhosNaFronteira(filhos)) {
+					fronteira.addAll(filhos);
+				} else {
+					atualizaFilhos(nodoAtual);
 				}
 			}
 			fronteira.remove(nodoAtual);
 			nodosVisitados.add(nodoAtual);
 			nodoAtual = buscaNodoFronteira();
+			if(nodoAtual==null){
+				nodoAtual = new Nodo(estadoSolucao);
+				erro = true;
+			}
 			System.out.println("Nodos na Fronteira: " + fronteira.size());
 		}
-		// Calcula caminho a partir do nodoAtual
+		if(erro){
+			System.out.println("Programa terminado. Caminho não encontrado :(");
+			return null;
+		}
 		System.out.println("Solução encontrada!");
 		return geraCaminhoSolucao(nodoAtual);
 	}
 
-	private boolean isFilhoNaFronteira(Nodo filho) {
-		boolean isFilhoNaFronteira = false;
-		for (Nodo n : fronteira) {
-			if (filho.estado.equals(n.estado))
-				isFilhoNaFronteira = true;
+	private void atualizaFilhos(Nodo pai) {
+		ArrayList<Nodo> filhos = buscaFilhos(pai);
+		for (Nodo filho : filhos) {
+			for (Nodo v : nodosVisitados) {
+				if (filho.estado.equals(v.estado)) {
+					v.pai = filho.pai;
+					v.custoTotalCaminho = filho.custoTotalCaminho;
+				}
+			}
+			for (Nodo f : fronteira) {
+				if (filho.estado.equals(f.estado)) {
+					f.pai = filho.pai;
+					f.custoTotalCaminho = filho.custoTotalCaminho;
+				}
+			}
 		}
-		return isFilhoNaFronteira;
+	}
+
+	private boolean haveFilhosNaFronteira(ArrayList<Nodo> filhos) {
+		boolean haveFilhoNaFronteira = false;
+		for (Nodo filho : filhos) {
+			for (Nodo n : fronteira) {
+				if (filho.estado.equals(n.estado))
+					haveFilhoNaFronteira = true;
+			}
+		}
+		return haveFilhoNaFronteira;
 	}
 
 	public boolean isNodoSolucao() {
@@ -72,9 +100,14 @@ public class Solver {
 	public Nodo buscaNodoFronteira() {
 		Nodo maisBarato = fronteira.get(0);
 		for (Nodo n : fronteira) {
-			if (n.custo_total_caminho > maisBarato.custo_total_caminho) {
-				maisBarato = n;
+			if (n.custoTotalCaminho > maisBarato.custoTotalCaminho) {
+				if(maisBarato.tamanhoCaminho < 32){
+					maisBarato = n;
+				}
 			}
+		}
+		if(maisBarato.tamanhoCaminho >=32){
+			maisBarato = null;
 		}
 		return maisBarato;
 	}
