@@ -27,8 +27,6 @@ public class HeuristicaBordas {
 		case 1:
 			for(int i = 0; i < bordas.size(); i++){
 				if(bordas.get(i)!=BORDAS_1.get(i)){
-					somatoriaBordas--;
-				}else{
 					somatoriaBordas++;
 				}
 			}
@@ -36,8 +34,6 @@ public class HeuristicaBordas {
 		case 2:
 			for(int i = 0; i < bordas.size(); i++){
 				if(bordas.get(i)!=BORDAS_2.get(i)){
-					somatoriaBordas--;
-				}else{
 					somatoriaBordas++;
 				}
 			}
@@ -45,8 +41,6 @@ public class HeuristicaBordas {
 		case 3:
 			for(int i = 0; i < bordas.size(); i++){
 				if(bordas.get(i)!=BORDAS_3.get(i)){
-					somatoriaBordas--;
-				}else{
 					somatoriaBordas++;
 				}
 			}
@@ -54,8 +48,6 @@ public class HeuristicaBordas {
 		case 4:
 			for(int i = 0; i < bordas.size(); i++){
 				if(bordas.get(i)!=BORDAS_4.get(i)){
-					somatoriaBordas--;
-				}else{
 					somatoriaBordas++;
 				}
 			}
@@ -63,8 +55,6 @@ public class HeuristicaBordas {
 		case 5:
 			for(int i = 0; i < bordas.size(); i++){
 				if(bordas.get(i)!=BORDAS_5.get(i)){
-					somatoriaBordas--;
-				}else{
 					somatoriaBordas++;
 				}
 			}
@@ -72,8 +62,6 @@ public class HeuristicaBordas {
 		case 6:
 			for(int i = 0; i < bordas.size(); i++){
 				if(bordas.get(i)!=BORDAS_6.get(i)){
-					somatoriaBordas--;
-				}else{
 					somatoriaBordas++;
 				}
 			}
@@ -81,8 +69,6 @@ public class HeuristicaBordas {
 		case 7:
 			for(int i = 0; i < bordas.size(); i++){
 				if(bordas.get(i)!=BORDAS_7.get(i)){
-					somatoriaBordas--;
-				}else{
 					somatoriaBordas++;
 				}
 			}
@@ -90,8 +76,6 @@ public class HeuristicaBordas {
 		case 8:
 			for(int i = 0; i < bordas.size(); i++){
 				if(bordas.get(i)!=BORDAS_8.get(i)){
-					somatoriaBordas--;
-				}else{
 					somatoriaBordas++;
 				}
 			}
@@ -99,8 +83,6 @@ public class HeuristicaBordas {
 		default:
 			for(int i = 0; i < bordas.size(); i++){
 				if(bordas.get(i)!=BORDAS_VAZIO.get(i)){
-					somatoriaBordas--;
-				}else{
 					somatoriaBordas++;
 				}
 			}
@@ -116,63 +98,63 @@ public class HeuristicaBordas {
 		switch(numero){
 		case 1:
 			for(int i = 0; i < bordas.size(); i++){
-				if(BORDAS_1.contains(bordas.get(i))){
+				if(!BORDAS_1.contains(bordas.get(i))){
 					quantidade++;
 				}
 			}
 			break;
 		case 2:
 			for(int i = 0; i < bordas.size(); i++){
-				if(BORDAS_2.contains(bordas.get(i))){
+				if(!BORDAS_2.contains(bordas.get(i))){
 					quantidade++;
 				}
 			}
 			break;
 		case 3:
 			for(int i = 0; i < bordas.size(); i++){
-				if(BORDAS_3.contains(bordas.get(i))){
+				if(!BORDAS_3.contains(bordas.get(i))){
 					quantidade++;
 				}
 			}
 			break;
 		case 4:
 			for(int i = 0; i < bordas.size(); i++){
-				if(BORDAS_4.contains(bordas.get(i))){
+				if(!BORDAS_4.contains(bordas.get(i))){
 					quantidade++;
 				}
 			}
 			break;
 		case 5:
 			for(int i = 0; i < bordas.size(); i++){
-				if(BORDAS_5.contains(bordas.get(i))){
+				if(!BORDAS_5.contains(bordas.get(i))){
 					quantidade++;
 				}
 			}
 			break;
 		case 6:
 			for(int i = 0; i < bordas.size(); i++){
-				if(BORDAS_6.contains(bordas.get(i))){
+				if(!BORDAS_6.contains(bordas.get(i))){
 					quantidade++;
 				}
 			}
 			break;
 		case 7:
 			for(int i = 0; i < bordas.size(); i++){
-				if(BORDAS_7.contains(bordas.get(i))){
+				if(!BORDAS_7.contains(bordas.get(i))){
 					quantidade++;
 				}
 			}
 			break;
 		case 8:
 			for(int i = 0; i < bordas.size(); i++){
-				if(BORDAS_8.contains(bordas.get(i))){
+				if(!BORDAS_8.contains(bordas.get(i))){
 					quantidade++;
 				}
 			}
 			break;
 		default:
 			for(int i = 0; i < bordas.size(); i++){
-				if(BORDAS_VAZIO.contains(bordas.get(i))){
+				if(!BORDAS_VAZIO.contains(bordas.get(i))){
 					quantidade++;
 				}
 			}

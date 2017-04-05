@@ -5,14 +5,14 @@ public class Main {
 	public static void main(String[] args) {
 		ArrayList<Integer> estado1 = new ArrayList<>();
 		estado1.add(1);
+		estado1.add(8);
 		estado1.add(2);
-		estado1.add(3);
 		estado1.add(4);
-		estado1.add(5);
 		estado1.add(0);
+		estado1.add(3);
 		estado1.add(7);
 		estado1.add(6);
-		estado1.add(8);
+		estado1.add(5);
 		Solver testSolver = new Solver(estado1);
 		ArrayList<String> solucao = testSolver.solvePuzzle();
 		if(solucao!=null){
@@ -43,6 +43,7 @@ public class Main {
 		System.out.println(nodo.estado.get(3)+" - "+nodo.estado.get(4)+" - "+nodo.estado.get(5));
 		System.out.println(nodo.estado.get(6)+" - "+nodo.estado.get(7)+" - "+nodo.estado.get(8));
 		System.out.println("Custo = "+nodo.custoHeuristicaBordas);
+		System.out.println("Custo total = "+nodo.custoTotalCaminho);
 	}
 
 }

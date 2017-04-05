@@ -23,6 +23,8 @@ public class Nodo {
 	public Nodo(ArrayList<Integer> estado) {
 		this.estado = estado;
 		custoHeuristicaBordas = calculeCusto(estado);
+		custoTotalCaminho = custoHeuristicaBordas;
+		tamanhoCaminho = 1;
 	}
 
 	public Nodo(ArrayList<Integer> estado, Nodo pai, String passo) {
