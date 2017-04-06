@@ -3,16 +3,7 @@ import java.util.ArrayList;
 public class Main {
 
 	public static void main(String[] args) {
-		ArrayList<Integer> estado1 = new ArrayList<>();
-		estado1.add(1);
-		estado1.add(8);
-		estado1.add(2);
-		estado1.add(4);
-		estado1.add(0);
-		estado1.add(3);
-		estado1.add(7);
-		estado1.add(6);
-		estado1.add(5);
+		int estado1[][] = {{8,6,7},{2,5,4},{3,0,1}};
 		Solver testSolver = new Solver(estado1);
 		ArrayList<String> solucao = testSolver.solvePuzzle();
 		if(solucao!=null){
@@ -22,7 +13,7 @@ public class Main {
 			}
 		}
 //		Nodo pai = new Nodo(estado1);
-//		printEstado(pai);
+//		printEstado(pai);		
 //		testaGeraFilhos(testSolver, pai);
 		
 		
@@ -36,12 +27,14 @@ public class Main {
 			System.out.println("Filho :");
 			printEstado(n);
 		}
+		System.out.println("pirnt pai: ");
+		printEstado(pai);
 	}
 	
 	public static void printEstado(Nodo nodo){
-		System.out.println(nodo.estado.get(0)+" - "+nodo.estado.get(1)+" - "+nodo.estado.get(2));
-		System.out.println(nodo.estado.get(3)+" - "+nodo.estado.get(4)+" - "+nodo.estado.get(5));
-		System.out.println(nodo.estado.get(6)+" - "+nodo.estado.get(7)+" - "+nodo.estado.get(8));
+		System.out.println(nodo.estado[0][0]+" - "+nodo.estado[0][1]+" - "+nodo.estado[0][2]);
+		System.out.println(nodo.estado[1][0]+" - "+nodo.estado[1][1]+" - "+nodo.estado[1][2]);
+		System.out.println(nodo.estado[2][0]+" - "+nodo.estado[2][1]+" - "+nodo.estado[2][2]);
 		System.out.println("Custo = "+nodo.custoHeuristicaBordas);
 		System.out.println("Custo total = "+nodo.custoTotalCaminho);
 	}

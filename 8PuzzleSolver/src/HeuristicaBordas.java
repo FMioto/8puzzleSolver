@@ -14,13 +14,8 @@ public class HeuristicaBordas {
 	private static final ArrayList<Integer> BORDAS_8 = new ArrayList<>(Arrays.asList(5,0,-1,7));
 	private static final ArrayList<Integer> BORDAS_VAZIO = new ArrayList<>(Arrays.asList(6,-1,-1,8));
 	
-// OUTPUTS:
-//	-4 = todas as bordas erradas
-//	-2 = tres bordas erradas e uma certa
-//	0 = duas bordas erradas e duas certas
-//	2 = tres bordas certas e uma errada
-//	4 = todas as bordas certas
-	
+
+	// calcula quantas bordas erradas tem um numero
 	public static int calculaBordasErradas(int numero, ArrayList<Integer>bordas){
 		int somatoriaBordas = 0;
 		switch(numero){
