@@ -19,14 +19,13 @@ public class Solver {
 			if (foiVisitado(nodoAtual)) {
 				int indexVisitado = getIndexNaLista(nodoAtual, nodosVisitados);
 				if (nodoAtual.custoTotalCaminho < nodosVisitados.get(indexVisitado).custoTotalCaminho) {
-					adicionaOuAtualizaFilhos(buscaFilhos(nodoAtual));
+					adicionaOuAtualizaFilhos(geraFilhos(nodoAtual));
 				}
 			} else {
-				adicionaOuAtualizaFilhos(buscaFilhos(nodoAtual));
+				adicionaOuAtualizaFilhos(geraFilhos(nodoAtual));
 			}
 			fronteira.remove(nodoAtual);
 			nodosVisitados.add(nodoAtual);
-
 			nodoAtual = buscaNodoFronteira();
 			if (nodoAtual == null) {
 				nodoAtual = new Nodo(estadoSolucao);
@@ -42,6 +41,10 @@ public class Solver {
 		return geraCaminhoSolucao(nodoAtual);
 	}
 
+	// Verifica se os filhos estão na fronteira ou ja foram visitados,
+	// nestes caso atualiza os filhos se os custos forem menores.
+	// Se ele não estiverem na fronteira e não foram visitados, são adicionados
+	// a fronteira.
 	private void adicionaOuAtualizaFilhos(ArrayList<Nodo> filhos) {
 		for (Nodo n : filhos) {
 			if (taNaFronteira(n)) {
@@ -100,15 +103,6 @@ public class Solver {
 		velho.tamanhoCaminho = novo.tamanhoCaminho;
 		velho.pai = novo.pai;
 		velho.passo = novo.passo;
-	}	
-
-	public Nodo isNodoVisitado(Nodo nodo) {
-		for (Nodo n : nodosVisitados) {
-			if (nodo.ehIgual(n.estado)) {
-				return n;
-			}
-		}
-		return null;
 	}
 
 	public Nodo buscaNodoFronteira() {
@@ -120,12 +114,15 @@ public class Solver {
 				}
 			}
 		}
+		// se o nodo mais barato vem de uma profundidade maior que 32 significa
+		// heuristica falhou
 		if (maisBarato.tamanhoCaminho >= 32) {
 			maisBarato = null;
 		}
 		return maisBarato;
 	}
 
+	// retorna os passos necessários para chegar à solução
 	public ArrayList<String> geraCaminhoSolucao(Nodo nodoAtual) {
 		Nodo nodo = nodoAtual;
 		ArrayList<String> solucao = new ArrayList<>();
@@ -136,7 +133,7 @@ public class Solver {
 		return solucao;
 	}
 
-	public ArrayList<Nodo> buscaFilhos(Nodo pai) {
+	public ArrayList<Nodo> geraFilhos(Nodo pai) {
 		ArrayList<Nodo> filhos = new ArrayList<>();
 		ArrayList<Integer> coordenadasZero = pai.getCoordenada(0);
 		int linhaZero = coordenadasZero.get(0);
@@ -163,37 +160,36 @@ public class Solver {
 
 	public Nodo geraFilhoPassoBaixo(Nodo pai, int linhaZero, int colunaZero) {
 		int[][] estadoFilho = pai.getCopia();
-		int numeroABaixo = estadoFilho[linhaZero+1][colunaZero];
+		int numeroABaixo = estadoFilho[linhaZero + 1][colunaZero];
 		estadoFilho[linhaZero][colunaZero] = numeroABaixo;
-		estadoFilho[linhaZero+1][colunaZero] = 0;
+		estadoFilho[linhaZero + 1][colunaZero] = 0;
 
 		return new Nodo(estadoFilho, pai, "Baixo");
 	}
 
 	public Nodo geraFilhoPassoCima(Nodo pai, int linhaZero, int colunaZero) {
 		int[][] estadoFilho = pai.getCopia();
-		int numeroACima = estadoFilho[linhaZero-1][colunaZero];
+		int numeroACima = estadoFilho[linhaZero - 1][colunaZero];
 		estadoFilho[linhaZero][colunaZero] = numeroACima;
-		estadoFilho[linhaZero-1][colunaZero] = 0;
+		estadoFilho[linhaZero - 1][colunaZero] = 0;
 
 		return new Nodo(estadoFilho, pai, "Cima");
 	}
 
 	public Nodo geraFilhoPassoDireita(Nodo pai, int linhaZero, int colunaZero) {
 		int[][] estadoFilho = pai.getCopia();
-		int numeroADireita = estadoFilho[linhaZero][colunaZero+1];
+		int numeroADireita = estadoFilho[linhaZero][colunaZero + 1];
 		estadoFilho[linhaZero][colunaZero] = numeroADireita;
-		estadoFilho[linhaZero][colunaZero+1] = 0;
+		estadoFilho[linhaZero][colunaZero + 1] = 0;
 
 		return new Nodo(estadoFilho, pai, "Direita");
 	}
 
 	public Nodo geraFilhoPassoEsquerda(Nodo pai, int linhaZero, int colunaZero) {
 		int[][] estadoFilho = pai.getCopia();
-		int pessaAEsquerda = estadoFilho[linhaZero][colunaZero-1];
+		int pessaAEsquerda = estadoFilho[linhaZero][colunaZero - 1];
 		estadoFilho[linhaZero][colunaZero] = pessaAEsquerda;
-		estadoFilho[linhaZero][colunaZero-1] = 0;
+		estadoFilho[linhaZero][colunaZero - 1] = 0;
 		return new Nodo(estadoFilho, pai, "Esquerda");
 	}
-	
 }
