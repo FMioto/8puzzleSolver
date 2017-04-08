@@ -3,164 +3,80 @@ import java.util.Arrays;
 
 public class HeuristicaBordas {
 
-	//sequencia: cima, direita, embaixo, esquerda
-	private static final ArrayList<Integer> BORDAS_1 = new ArrayList<>(Arrays.asList(-1,2,4,-1));
-	private static final ArrayList<Integer> BORDAS_2 = new ArrayList<>(Arrays.asList(-1,3,5,1));
-	private static final ArrayList<Integer> BORDAS_3 = new ArrayList<>(Arrays.asList(-1,-1,6,2));
-	private static final ArrayList<Integer> BORDAS_4 = new ArrayList<>(Arrays.asList(1,5,7,-1));
-	private static final ArrayList<Integer> BORDAS_5 = new ArrayList<>(Arrays.asList(2,6,8,4));
-	private static final ArrayList<Integer> BORDAS_6 = new ArrayList<>(Arrays.asList(3,-1,0,5));
-	private static final ArrayList<Integer> BORDAS_7 = new ArrayList<>(Arrays.asList(4,8,-1,-1));
-	private static final ArrayList<Integer> BORDAS_8 = new ArrayList<>(Arrays.asList(5,0,-1,7));
-	private static final ArrayList<Integer> BORDAS_VAZIO = new ArrayList<>(Arrays.asList(6,-1,-1,8));
-	
-// OUTPUTS:
-//	-4 = todas as bordas erradas
-//	-2 = tres bordas erradas e uma certa
-//	0 = duas bordas erradas e duas certas
-//	2 = tres bordas certas e uma errada
-//	4 = todas as bordas certas
-	
-	public static int calculaBordasErradas(int numero, ArrayList<Integer>bordas){
+	public static final int[][] ESTADO_SOLUCAO = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 0 } };
+
+	// calcula quantas bordas erradas tem um numero
+	public static int calculaBordasErradas(int numero, ArrayList<Integer> bordas) {
 		int somatoriaBordas = 0;
-		switch(numero){
-		case 1:
-			for(int i = 0; i < bordas.size(); i++){
-				if(bordas.get(i)!=BORDAS_1.get(i)){
-					somatoriaBordas++;
-				}
+		ArrayList<Integer> bordasSolucao = getConjuntoBordas(numero);
+		for (int i = 0; i < bordasSolucao.size(); i++) {
+			if (bordas.get(i) != bordasSolucao.get(i)) {
+				somatoriaBordas++;
 			}
-			break;
-		case 2:
-			for(int i = 0; i < bordas.size(); i++){
-				if(bordas.get(i)!=BORDAS_2.get(i)){
-					somatoriaBordas++;
-				}
-			}
-			break;
-		case 3:
-			for(int i = 0; i < bordas.size(); i++){
-				if(bordas.get(i)!=BORDAS_3.get(i)){
-					somatoriaBordas++;
-				}
-			}
-			break;
-		case 4:
-			for(int i = 0; i < bordas.size(); i++){
-				if(bordas.get(i)!=BORDAS_4.get(i)){
-					somatoriaBordas++;
-				}
-			}
-			break;
-		case 5:
-			for(int i = 0; i < bordas.size(); i++){
-				if(bordas.get(i)!=BORDAS_5.get(i)){
-					somatoriaBordas++;
-				}
-			}
-			break;
-		case 6:
-			for(int i = 0; i < bordas.size(); i++){
-				if(bordas.get(i)!=BORDAS_6.get(i)){
-					somatoriaBordas++;
-				}
-			}
-			break;
-		case 7:
-			for(int i = 0; i < bordas.size(); i++){
-				if(bordas.get(i)!=BORDAS_7.get(i)){
-					somatoriaBordas++;
-				}
-			}
-			break;
-		case 8:
-			for(int i = 0; i < bordas.size(); i++){
-				if(bordas.get(i)!=BORDAS_8.get(i)){
-					somatoriaBordas++;
-				}
-			}
-			break;
-		default:
-			for(int i = 0; i < bordas.size(); i++){
-				if(bordas.get(i)!=BORDAS_VAZIO.get(i)){
-					somatoriaBordas++;
-				}
-			}
-			break;
-		}		
+		}
 		return somatoriaBordas;
 	}
-	
-//	Calcula quantas bordas pertecem as bordas corretas, independente da posicao delas
-//	retorna entre 1 - 4
-	public static int calculaQuantidadeBorda(int numero, ArrayList<Integer>bordas){
+
+	// Calcula quantas bordas não pertecem ao conjunto de bordas corretas,
+	// independente da posicao delas
+	public static int calculaQuantidadeBorda(int numero, ArrayList<Integer> bordas) {
 		int quantidade = 0;
-		switch(numero){
-		case 1:
-			for(int i = 0; i < bordas.size(); i++){
-				if(!BORDAS_1.contains(bordas.get(i))){
-					quantidade++;
-				}
+		ArrayList<Integer> bordasSolucao = getConjuntoBordas(numero);
+		for (int i : bordas) {
+			if (!bordasSolucao.contains(i)) {
+				quantidade++;
 			}
-			break;
-		case 2:
-			for(int i = 0; i < bordas.size(); i++){
-				if(!BORDAS_2.contains(bordas.get(i))){
-					quantidade++;
-				}
-			}
-			break;
-		case 3:
-			for(int i = 0; i < bordas.size(); i++){
-				if(!BORDAS_3.contains(bordas.get(i))){
-					quantidade++;
-				}
-			}
-			break;
-		case 4:
-			for(int i = 0; i < bordas.size(); i++){
-				if(!BORDAS_4.contains(bordas.get(i))){
-					quantidade++;
-				}
-			}
-			break;
-		case 5:
-			for(int i = 0; i < bordas.size(); i++){
-				if(!BORDAS_5.contains(bordas.get(i))){
-					quantidade++;
-				}
-			}
-			break;
-		case 6:
-			for(int i = 0; i < bordas.size(); i++){
-				if(!BORDAS_6.contains(bordas.get(i))){
-					quantidade++;
-				}
-			}
-			break;
-		case 7:
-			for(int i = 0; i < bordas.size(); i++){
-				if(!BORDAS_7.contains(bordas.get(i))){
-					quantidade++;
-				}
-			}
-			break;
-		case 8:
-			for(int i = 0; i < bordas.size(); i++){
-				if(!BORDAS_8.contains(bordas.get(i))){
-					quantidade++;
-				}
-			}
-			break;
-		default:
-			for(int i = 0; i < bordas.size(); i++){
-				if(!BORDAS_VAZIO.contains(bordas.get(i))){
-					quantidade++;
-				}
-			}
-			break;
 		}
 		return quantidade;
 	}
-	
+
+	// calcula o conjunto de bordas de determinado numero no estado solução
+	public static ArrayList<Integer> getConjuntoBordas(int num) {
+		ArrayList<Integer> conjuntoBordas = new ArrayList<>();
+		ArrayList<Integer> coordenadas = getCoordenadasNumero(num);
+		int linha = coordenadas.get(0);
+		int coluna = coordenadas.get(1);
+
+		// borda de cima
+		try {
+			conjuntoBordas.add(ESTADO_SOLUCAO[linha - 1][coluna]);
+		} catch (IndexOutOfBoundsException e) {
+			conjuntoBordas.add(-1);
+		}
+
+		// borda da direita
+		try {
+			conjuntoBordas.add(ESTADO_SOLUCAO[linha][coluna + 1]);
+		} catch (IndexOutOfBoundsException e) {
+			conjuntoBordas.add(-1);
+		}
+
+		// borda de baixo
+		try {
+			conjuntoBordas.add(ESTADO_SOLUCAO[linha + 1][coluna]);
+		} catch (IndexOutOfBoundsException e) {
+			conjuntoBordas.add(-1);
+		}
+
+		// borda da esquerda
+		try {
+			conjuntoBordas.add(ESTADO_SOLUCAO[linha][coluna - 1]);
+		} catch (IndexOutOfBoundsException e) {
+			conjuntoBordas.add(-1);
+		}
+		return conjuntoBordas;
+	}
+
+	private static ArrayList<Integer> getCoordenadasNumero(int num) {
+		ArrayList<Integer> coord = new ArrayList<>();
+		for (int i = 0; i < ESTADO_SOLUCAO.length; i++) {
+			for (int j = 0; j < ESTADO_SOLUCAO.length; j++) {
+				if (num == ESTADO_SOLUCAO[i][j]) {
+					coord.add(i);
+					coord.add(j);
+				}
+			}
+		}
+		return coord;
+	}
 }
