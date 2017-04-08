@@ -10,16 +10,6 @@ public class Nodo {
 	int custoTotalCaminho = 0;
 	int tamanhoCaminho = 0;
 
-	private static final ArrayList<Integer> BORDAS_POSICAO_0 = new ArrayList<>(Arrays.asList(-1, 9, 9, -1));
-	private static final ArrayList<Integer> BORDAS_POSICAO_1 = new ArrayList<>(Arrays.asList(-1, 9, 9, 9));
-	private static final ArrayList<Integer> BORDAS_POSICAO_2 = new ArrayList<>(Arrays.asList(-1, -1, 9, 9));
-	private static final ArrayList<Integer> BORDAS_POSICAO_3 = new ArrayList<>(Arrays.asList(9, 9, 9, -1));
-	private static final ArrayList<Integer> BORDAS_POSICAO_4 = new ArrayList<>(Arrays.asList(9, 9, 9, 9));
-	private static final ArrayList<Integer> BORDAS_POSICAO_5 = new ArrayList<>(Arrays.asList(9, -1, 9, 9));
-	private static final ArrayList<Integer> BORDAS_POSICAO_6 = new ArrayList<>(Arrays.asList(9, 9, -1, -1));
-	private static final ArrayList<Integer> BORDAS_POSICAO_7 = new ArrayList<>(Arrays.asList(9, 9, -1, 9));
-	private static final ArrayList<Integer> BORDAS_POSICAO_8 = new ArrayList<>(Arrays.asList(9, -1, -1, 9));
-
 	public Nodo(int[][] estado) {
 		this.estado = estado;
 		custoHeuristicaBordas = calculeCusto(estado);
@@ -54,7 +44,6 @@ public class Nodo {
 				bordas = getBordasPosicao(getCoordenada(n));
 				custo += HeuristicaBordas.calculaBordasErradas(n, bordas);
 				custo += HeuristicaBordas.calculaQuantidadeBorda(n, bordas);
-
 			}
 		}
 		return custo;
@@ -81,56 +70,30 @@ public class Nodo {
 		ArrayList<Integer> bordas = new ArrayList<>();
 
 		// borda de cima
-		if (temNumeroPosicao(linha, coluna, -1, 0)) {
+		if (linha > 0)
 			bordas.add(this.estado[linha - 1][coluna]);
-		} else {
+		else
 			bordas.add(-1);
-		}
 
 		// borda da direita
-		if (temNumeroPosicao(linha, coluna, 0, 1))
+		if (coluna < 2)
 			bordas.add(this.estado[linha][coluna + 1]);
 		else
 			bordas.add(-1);
 
 		// borda de baixo
-		if (temNumeroPosicao(linha, coluna, 1, 0))
+		if (linha < 2)
 			bordas.add(this.estado[linha + 1][coluna]);
 		else
 			bordas.add(-1);
 
 		// borda da esquerda
-		if (temNumeroPosicao(linha, coluna, 0, -1))
+		if (coluna > 0)
 			bordas.add(this.estado[linha][coluna - 1]);
 		else
 			bordas.add(-1);
 
 		return bordas;
-	}
-
-	/*
-	 * -- Identifica o limite externo do tabuleiro em referencia a posicao dada
-	 * primeiro ele tenta acessar o tablueiro em uma posicao dada: - se não cair
-	 * na exceção significa que é uma posicao válida no tabuleiro - se entrar na
-	 * execao significa que a posicao acessada está fora do tabuleiro
-	 */
-	public boolean temNumeroPosicao(int linha, int coluna, int somaLinha, int somaColuna) {
-		int[][] tab = new int[3][3];
-		int teste;
-		if (somaLinha != 0) {
-			try {
-				teste = tab[linha + somaLinha][coluna];
-			} catch (IndexOutOfBoundsException e) {
-				return false;
-			}
-		} else {
-			try {
-				int n = tab[linha][coluna + somaColuna];
-			} catch (IndexOutOfBoundsException e) {
-				return false;
-			}
-		}
-		return true;
 	}
 
 	public int[][] getCopia() {
@@ -142,11 +105,11 @@ public class Nodo {
 		}
 		return copia;
 	}
-	
-	public boolean ehIgual(int[][] matriz){
-		for(int i=0;i<this.estado.length;i++){
-			for(int j=0;j<this.estado.length;j++){
-				if(this.estado[i][j] != matriz[i][j]){
+
+	public boolean ehIgual(int[][] matriz) {
+		for (int i = 0; i < this.estado.length; i++) {
+			for (int j = 0; j < this.estado.length; j++) {
+				if (this.estado[i][j] != matriz[i][j]) {
 					return false;
 				}
 			}
