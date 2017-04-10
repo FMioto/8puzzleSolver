@@ -41,7 +41,7 @@ public class Nodo {
 			for (int coluna = 0; coluna < estado.length; coluna++) {
 				int n = estado[linha][coluna];
 				bordas = new ArrayList<>();
-				bordas = getBordasPosicao(getCoordenada(n));
+				bordas = getBordasPosicao(linha, coluna);
 				custo += HeuristicaBordas.calculaBordasErradas(n, bordas);
 				custo += HeuristicaBordas.calculaQuantidadeBorda(n, bordas);
 			}
@@ -64,9 +64,7 @@ public class Nodo {
 	}
 
 	// retorna as bordas de uma posicao dada
-	public ArrayList<Integer> getBordasPosicao(ArrayList<Integer> posicao) {
-		int linha = posicao.get(0);
-		int coluna = posicao.get(1);
+	public ArrayList<Integer> getBordasPosicao(int linha, int coluna) {
 		ArrayList<Integer> bordas = new ArrayList<>();
 
 		// borda de cima

@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Main {
 
 	public static void main(String[] args) {
-		int estado1[][] = {{2,7,1},{8,3,6},{4,5,0}};
+		int estado1[][] = {{7,3,2},{5,0,8},{1,4,6}};
 		Solver testSolver = new Solver(estado1);
 		ArrayList<String> solucao = testSolver.solvePuzzle();
 		if(solucao!=null){
