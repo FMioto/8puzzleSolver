@@ -19,19 +19,25 @@ public class Solver {
 			if (foiVisitado(nodoAtual)) {
 				int indexVisitado = getIndexNaLista(nodoAtual, nodosVisitados);
 				if (nodoAtual.custoTotalCaminho < nodosVisitados.get(indexVisitado).custoTotalCaminho) {
+					nodosVisitados.get(indexVisitado).pai = nodoAtual.pai;
+					nodosVisitados.get(indexVisitado).custoTotalCaminho = nodoAtual.custoTotalCaminho;
+					nodosVisitados.get(indexVisitado).tamanhoCaminho = nodoAtual.tamanhoCaminho;
+					nodosVisitados.get(indexVisitado).passo = nodoAtual.passo;
 					adicionaOuAtualizaFilhos(geraFilhos(nodoAtual));
 				}
 			} else {
 				adicionaOuAtualizaFilhos(geraFilhos(nodoAtual));
+				nodosVisitados.add(nodoAtual);
 			}
 			fronteira.remove(nodoAtual);
-			nodosVisitados.add(nodoAtual);
 			nodoAtual = buscaNodoFronteira();
 			if (nodoAtual == null) {
 				nodoAtual = new Nodo(estadoSolucao);
 				erro = true;
 			}
-			System.out.println("Nodos na Fronteira: " + fronteira.size());
+			if (fronteira.size() % 1000 == 0) {
+				System.out.println("Nodos na Fronteira: " + fronteira.size());
+			}
 		}
 		if (erro) {
 			System.out.println("Programa terminado. Caminho não encontrado");
@@ -51,7 +57,7 @@ public class Solver {
 				atualizaFilhoFronteira(n);
 			} else if (foiVisitado(n)) {
 				atualizaFilhoVisitados(n);
-			} else {
+			} else if (n.tamanhoCaminho <= 32) {
 				fronteira.add(n);
 			}
 		}
@@ -77,14 +83,14 @@ public class Solver {
 
 	private void atualizaFilhoFronteira(Nodo novoNodo) {
 		int indexFronteira = getIndexNaLista(novoNodo, fronteira);
-		if (novoNodo.custoTotalCaminho < fronteira.get(indexFronteira).custoTotalCaminho) {
+		if (novoNodo.custoTotalCaminho < fronteira.get(indexFronteira).custoTotalCaminho && novoNodo.tamanhoCaminho<=32) {
 			atualizaFilho(fronteira.get(indexFronteira), novoNodo);
 		}
 	}
 
 	private void atualizaFilhoVisitados(Nodo novoNodo) {
 		int indexVisitado = getIndexNaLista(novoNodo, nodosVisitados);
-		if (novoNodo.custoTotalCaminho < nodosVisitados.get(indexVisitado).custoTotalCaminho) {
+		if (novoNodo.custoTotalCaminho < nodosVisitados.get(indexVisitado).custoTotalCaminho && novoNodo.tamanhoCaminho<=32) {
 			atualizaFilho(nodosVisitados.get(indexVisitado), novoNodo);
 		}
 	}
